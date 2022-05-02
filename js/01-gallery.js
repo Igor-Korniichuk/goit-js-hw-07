@@ -22,16 +22,25 @@ function createItemGalleryMurkup(galleryItems) {
 
 divGalleryEl.addEventListener('click', onOpenGalleryItem);
 
-function onOpenGalleryItem(event) {
+function onOpenGalleryItem(event) { 
     
     event.preventDefault();
     if (event.target.nodeName !== "IMG") {
         return;
     }
-        
+    
     const eventImageEl = event.target.dataset.source;    
     const instance = basicLightbox.create(`<img src="${eventImageEl}">`);       
     instance.show();
+
+    window.addEventListener('keydown', onCloseImgEsc);
+
+    function onCloseImgEsc(event) {
+        if (event.code !== "Escape") {
+            return;
+        }
+        instance.close();
+    }
 }
     
 
