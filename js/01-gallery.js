@@ -30,16 +30,19 @@ function onOpenGalleryItem(event) {
     }
     
     const eventImageEl = event.target.dataset.source;    
-    const instance = basicLightbox.create(`<img src="${eventImageEl}">`);       
-    instance.show();
-
-    window.addEventListener('keydown', onCloseImgEsc);
+    const instance = basicLightbox.create(`<img src="${eventImageEl}">`, {
+        onShow: instance => {window.addEventListener('keydown', onCloseImgEsc)},
+        onClose: instance => {window.removeEventListener('keydown', onCloseImgEsc)},
+    });       
+    instance.show()    
 
     function onCloseImgEsc(event) {
-        if (event.code !== "Escape") {
+        instance.onShow;
+        if (event.code !== "Escape") {            
             return;
         }
         instance.close();
+        instance.onClose;        
     }
 }
     
